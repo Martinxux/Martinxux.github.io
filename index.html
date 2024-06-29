@@ -226,7 +226,13 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out%20of%20memory%E9%94%99%E8%AF%AF/" target="_self">
+          <img src="/img/qinglong.png" srcset="/img/loading.gif" lazyload alt="青龙面板拉库失败——out of memory错误">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h2 class="index-header">
         
         <a href="/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out%20of%20memory%E9%94%99%E8%AF%AF/" target="_self">
@@ -235,7 +241,7 @@
       </h2>
 
       
-      <a class="index-excerpt index-excerpt__noimg" href="/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out%20of%20memory%E9%94%99%E8%AF%AF/" target="_self">
+      <a class="index-excerpt " href="/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out%20of%20memory%E9%94%99%E8%AF%AF/" target="_self">
         <div>
           青龙面板拉库的时候遇到一个问题，刚开始以为是代理问题，遂自己从 cloudfare 建个加速站，但是还是不行，从网上也找了很多加速代理，都没能成功拉下来。然后想着不然直接【曲线救国】吧，就不用 github 拉了，直接 clone 到 gitee 上面拉结果。。。报了如下的错误 开始拉取仓库 mrabit_aliyundriveDailyCheck 到 /ql/data/repo/mrabit_a
         </div>
@@ -384,7 +390,37 @@
       }
       var text = subtitle.getAttribute('data-typed-text');
       
-        typing(text);
+        jQuery.ajax({
+          type: 'GET',
+          url: 'https://v2.jinrishici.com/sentence',
+          headers: {},
+          dataType: 'json',
+          success: function(result) {
+            var apiText;
+            if (result) {
+              var keys = 'data,content'.split(',');
+              if (result instanceof Array) {
+                result = result[0];
+              }
+              for (const k of keys) {
+                var value = result[k];
+                if (typeof value === 'string') {
+                  apiText = value;
+                  break;
+                } else if (value instanceof Object) {
+                  result = value;
+                }
+              }
+            }
+            apiText ? typing(apiText) : typing(text);
+          },
+          error: function(xhr, status, error) {
+            if (error) {
+              console.error('Failed to request https://v2.jinrishici.com/sentence:', error);
+            }
+            typing(text);
+          }
+        })
       
     })(window, document);
   </script>
