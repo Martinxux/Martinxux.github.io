@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -25,14 +25,14 @@
 <meta property="og:site_name" content="Martin&#39;s Blog">
 <meta property="og:description" content="开篇上次写了 I2C 的爱恨情仇后，决定细讲一下 I2C 协议，也作为自己的一个笔记，以后有些东西忘记了常来翻翻。 这是百度百科的介绍  I2C 总线是由 Philips 公司开发的一种简单、双向二线制同步串行总线。它只需要两根线即可在连接于总线上的器件之间传送信息。主器件用于启动总线传送数据，并产生时钟以开放传送的器件，此时任何被寻址的器件均被认为是从器件．在总线上主和从、发和收的关系不是恒定的">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/Martinxux/Martinxux.github.io/blob/gh-pages/2024/06/30/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/I2C%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://blog.haloa.top/2024/06/30/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/I2C%E6%B5%81%E7%A8%8B.png">
 <meta property="article:published_time" content="2024-06-30T02:37:11.000Z">
-<meta property="article:modified_time" content="2024-06-30T14:24:25.295Z">
+<meta property="article:modified_time" content="2024-06-30T15:18:15.937Z">
 <meta property="article:author" content="Martinxux">
 <meta property="article:tag" content="信号测试">
 <meta property="article:tag" content="I2C">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://github.com/Martinxux/Martinxux.github.io/blob/gh-pages/2024/06/30/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/I2C%E6%B5%81%E7%A8%8B.png">
+<meta name="twitter:image" content="https://blog.haloa.top/2024/06/30/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/I2C%E6%B5%81%E7%A8%8B.png">
   
   
   
@@ -45,6 +45,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -466,8 +468,8 @@
 <p>这种电路具有两个特点：</p>
 <p> <em><strong>1. 由于SDA、SCL为漏极开路结构，借助于外部的上拉电阻实现了信号的“线与”逻辑；</strong></em><br> <em><strong>2. 引脚在输出信号的同时还将引脚上的电平进行检测，检测是否与刚才输出一致。为 “时钟同步”和“总线仲裁”提供硬件基础。</strong></em></p>
 <p>那为什么 I2C 要用到漏极开路和上拉电阻呢？</p>
-<pre><code class="hljs">IIC协议支持多个主设备与多个从设备在一条总线上, 如果不用开漏输出, 而用推挽输出, 会出现主设备之间短路的情况. 至于为什么需要上拉电阻, 那是因为IIC通信需要输出高电平的能力. 
-</code></pre>
+<figure><div class="code-wrapper"><pre class="language-none"><code class="language-none">IIC协议支持多个主设备与多个从设备在一条总线上, 如果不用开漏输出, 而用推挽输出, 会出现主设备之间短路的情况. 至于为什么需要上拉电阻, 那是因为IIC通信需要输出高电平的能力. 
+</code></pre></div></figure>
 <h1 id="四、Spec介绍"><a href="#四、Spec介绍" class="headerlink" title="四、Spec介绍"></a>四、Spec介绍</h1><p>下面是测试人员最需要关注的一页了，<strong>Electrical specifications and timing</strong></p>
 <p><img src="/2024/06/30/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/Spec.png" srcset="/img/loading.gif" lazyload alt="Spec"><br><img src="/2024/06/30/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/timming.png" srcset="/img/loading.gif" lazyload alt="timing"></p>
 <p>对上面部分参数的解释如下</p>
@@ -874,6 +876,12 @@
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 

@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html lang="zh-CN" data-default-color-scheme=auto>
+<html lang="zh-CN" data-default-color-scheme=dark>
 
 
 
@@ -25,13 +25,13 @@
 <meta property="og:site_name" content="Martin&#39;s Blog">
 <meta property="og:description" content="青龙面板拉库的时候遇到一个问题，刚开始以为是代理问题，遂自己从 cloudfare 建个加速站，但是还是不行，从网上也找了很多加速代理，都没能成功拉下来。然后想着不然直接【曲线救国】吧，就不用 github 拉了，直接 clone 到 gitee 上面拉结果。。。报了如下的错误 开始拉取仓库 mrabit_aliyundriveDailyCheck 到 &#x2F;ql&#x2F;data&#x2F;repo&#x2F;mrabit_a">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/Martinxux/Martinxux.github.io/blob/gh-pages/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out-of-memory%E9%94%99%E8%AF%AF/qinglong.png">
+<meta property="og:image" content="https://blog.haloa.top/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out-of-memory%E9%94%99%E8%AF%AF/qinglong.png">
 <meta property="article:published_time" content="2024-06-29T09:39:44.000Z">
-<meta property="article:modified_time" content="2024-06-30T14:23:53.407Z">
+<meta property="article:modified_time" content="2024-06-30T15:19:02.385Z">
 <meta property="article:author" content="Martinxux">
 <meta property="article:tag" content="青龙面板">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://github.com/Martinxux/Martinxux.github.io/blob/gh-pages/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out-of-memory%E9%94%99%E8%AF%AF/qinglong.png">
+<meta name="twitter:image" content="https://blog.haloa.top/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out-of-memory%E9%94%99%E8%AF%AF/qinglong.png">
   
   
   
@@ -44,6 +44,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -345,7 +347,7 @@
               <div class="markdown-body">
                 
                 <p>青龙面板拉库的时候遇到一个问题，刚开始以为是代理问题，遂自己从 cloudfare 建个加速站，但是还是不行，从网上也找了很多加速代理，都没能成功拉下来。<br>然后想着不然直接【<strong>曲线救国</strong>】吧，就不用 github 拉了，直接 clone 到 gitee 上面拉<br>结果。。。<br>报了如下的错误</p>
-<pre><code class="hljs">开始拉取仓库 mrabit_aliyundriveDailyCheck 到 /ql/data/repo/mrabit_aliyundriveDailyCheck
+<figure><div class="code-wrapper"><pre class="language-none"><code class="language-none">开始拉取仓库 mrabit_aliyundriveDailyCheck 到 /ql/data/repo/mrabit_aliyundriveDailyCheck
 
 Cloning into &#39;/ql/data/repo/mrabit_aliyundriveDailyCheck&#39;...
 
@@ -357,12 +359,12 @@ Please make sure you have the correct access rights
 and the repository exists.
 
 拉取 mrabit_aliyundriveDailyCheck 失败，请检查网络...
-</code></pre>
+</code></pre></div></figure>
 <p>目前还是不清楚啥原因</p>
 <hr>
 <p>用了这个代码之后貌似可以了</p>
-<pre><code class="hljs">git config --global --unset http.postbuffer
-</code></pre>
+<figure><div class="code-wrapper"><pre class="language-none"><code class="language-none">git config --global --unset http.postbuffer
+</code></pre></div></figure>
 <p>好像是因为内存限制的原因。然后就在终端用了这个命令，不再报错了。</p>
 <hr>
 <p>关于 <code>http.postbuffer</code>的问题</p>
@@ -373,14 +375,14 @@ and the repository exists.
 </ul>
 </blockquote>
 <p>如果已经设置了<code>http.postbuffer</code>，怎么取消呢？<br>若要检查是否已设置，请运行：</p>
-<pre><code class="hljs">git config --show-origin --get-all http.postBuffer
-</code></pre>
+<figure><div class="code-wrapper"><pre class="language-none"><code class="language-none">git config --show-origin --get-all http.postBuffer
+</code></pre></div></figure>
 <p>可能需要在全局 <code>.gitconfig</code> 文件中取消设置：</p>
-<pre><code class="hljs">git config --global --unset http.postBuffer
-</code></pre>
+<figure><div class="code-wrapper"><pre class="language-none"><code class="language-none">git config --global --unset http.postBuffer
+</code></pre></div></figure>
 <p>以及在存储库级别 <code>.git/config</code>（替代全局设置）中取消设置：</p>
-<pre><code class="hljs">git config --local --unset http.postBuffer
-</code></pre>
+<figure><div class="code-wrapper"><pre class="language-none"><code class="language-none">git config --local --unset http.postBuffer
+</code></pre></div></figure>
 <hr>
 <p>当然，最后还是用了 gitee 来进行拉库，正好 gitee 可以自动 pull github的仓库镜像。<br><img src="/2024/06/29/%E9%9D%92%E9%BE%99%E9%9D%A2%E6%9D%BF%E6%8B%89%E5%BA%93%E5%A4%B1%E8%B4%A5%E2%80%94%E2%80%94out-of-memory%E9%94%99%E8%AF%AF/pull_github.png" srcset="/img/loading.gif" lazyload alt="pull_github"></p>
 
@@ -768,6 +770,12 @@ and the repository exists.
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/components/prism-core.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" ></script>
+
+  <script  src="https://lib.baomitu.com/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
 
