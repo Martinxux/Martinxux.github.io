@@ -27,7 +27,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://blog.haloa.top/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/I2C%E6%B5%81%E7%A8%8B.png">
 <meta property="article:published_time" content="2024-06-30T02:37:11.000Z">
-<meta property="article:modified_time" content="2024-06-30T07:53:12.708Z">
+<meta property="article:modified_time" content="2024-06-30T10:56:45.280Z">
 <meta property="article:author" content="Martinxux">
 <meta property="article:tag" content="信号测试">
 <meta property="article:tag" content="I2C">
@@ -303,7 +303,7 @@
             
               <div class="markdown-body">
                 
-                <h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/I2C.png" srcset="/img/loading.gif" lazyload alt="I2C"><br>上次写了 I2C 的爱恨情仇后，决定细讲一下 I2C 协议，也作为自己的一个笔记，以后有些东西忘记了常来翻翻。</p>
+                <h1 id="开篇"><a href="#开篇" class="headerlink" title="开篇"></a>开篇</h1><p><img src="/.top//I2C.png" srcset="/img/loading.gif" lazyload alt="I2C"><br>上次写了 I2C 的爱恨情仇后，决定细讲一下 I2C 协议，也作为自己的一个笔记，以后有些东西忘记了常来翻翻。</p>
 <p>这是百度百科的介绍</p>
 <blockquote>
 <p>I2C 总线是由 Philips 公司开发的一种简单、双向二线制同步串行总线。它只需要两根线即可在连接于总线上的器件之间传送信息。<br>主器件用于启动总线传送数据，并产生时钟以开放传送的器件，此时任何被寻址的器件均被认为是从器件．在总线上主和从、发和收的关系不是恒定的，而取决于此时数据传送方向。如果主机要发送数据给从器件，则主机首先寻址从器件，然后主动发送数据至从器件，最后由主机终止数据传送；如果主机要接收从器件的数据，首先由主器件寻址从器件．然后主机接收从器件发送的数据，最后由主机终止接收过程。在这种情况下．主机负责产生定时时钟和终止数据传送。</p>
@@ -319,13 +319,13 @@
 </ul>
 <hr>
 <p>介绍完之后，下面进入正题，我也不知道会分几步来说，想到哪说到哪把，以下的资料都是在 IIC 协会手册（<a target="_blank" rel="noopener" href="https://www.nxp.com/docs/en/user-guide/UM10204.pdf">IIC 手册</a>）上的加上自己的理解，有部分我自己也模模糊糊，发出来一起学习把，有错误帮忙指出下各位看官老少爷们~~</p>
-<h1 id="一、时序"><a href="#一、时序" class="headerlink" title="一、时序"></a>一、时序</h1><h2 id="时序及特性"><a href="#时序及特性" class="headerlink" title="时序及特性"></a>时序及特性</h2><p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/timming.png" srcset="/img/loading.gif" lazyload alt="I2C时序图"></p>
+<h1 id="一、时序"><a href="#一、时序" class="headerlink" title="一、时序"></a>一、时序</h1><h2 id="时序及特性"><a href="#时序及特性" class="headerlink" title="时序及特性"></a>时序及特性</h2><p><img src="/.top//timming.png" srcset="/img/loading.gif" lazyload alt="I2C时序图"></p>
 <p>如图为网上找的 IIC 时序图，这张图还是比较全面的。</p>
 <p>结合 IIC 手册直接总结经验</p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/%E5%BC%80%E5%A7%8B%E7%BB%93%E6%9D%9F%E6%A0%87%E5%BF%97.png" srcset="/img/loading.gif" lazyload alt="开始结束标志"></p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/%E8%AF%BB%E5%86%99%E4%BD%8D.png" srcset="/img/loading.gif" lazyload alt="读写位"></p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/%E6%95%B0%E6%8D%AE%E6%9C%89%E6%95%88%E6%80%A7.png" srcset="/img/loading.gif" lazyload alt="数据有效性"></p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/ACK&NACK.png" srcset="/img/loading.gif" lazyload alt="ACK&amp;NACK"></p>
+<p><img src="/.top//%E5%BC%80%E5%A7%8B%E7%BB%93%E6%9D%9F%E6%A0%87%E5%BF%97.png" srcset="/img/loading.gif" lazyload alt="开始结束标志"></p>
+<p><img src="/.top//%E8%AF%BB%E5%86%99%E4%BD%8D.png" srcset="/img/loading.gif" lazyload alt="读写位"></p>
+<p><img src="/.top//%E6%95%B0%E6%8D%AE%E6%9C%89%E6%95%88%E6%80%A7.png" srcset="/img/loading.gif" lazyload alt="数据有效性"></p>
+<p><img src="/.top//ACK&NACK.png" srcset="/img/loading.gif" lazyload alt="ACK&amp;NACK"></p>
 <p><strong>起始信号：</strong>I2C 协议规定，SCL处于高电平时，SDA 由高到低变化，这种信号是起始信号<br><strong>停止信号：</strong>I2C 协议规定，SCL处于高电平，SDA 由低到高变化，这种信号是停止信号<br><strong>读写信号：</strong>I2C 协议规定，当第 8 个始终周期的时候，SDA 为高电平时为读（1）；SDA 为低电平时为写（0）<br><strong>数据有效性：</strong>I2C 协议对数据的采样发生在 SCL 高电平期间，除了起始和停止信号，在数据传输期间，SCL 为高电平时，SDA 必须保持稳定，不允许改变，在 SCL 低电平时才可以进行变化，即时钟高电平采样[&#x2F;scode]<br><strong>ACK&#x2F;NACK信号：</strong>在第 9 个时钟周期的时候，如果读取到 SDA 为低电平，则说明数据被从机成功接收到，可进行下一步操作。若 SDA 为高电平，说明数据未被应答，没有成功的建立通信，需进一步寻找原因[&#x2F;scode]</p>
 <p>在这几点的基础上再来看这张图就很清晰明了了。<br>由此我们可以读出地址、读写情况、数据等信息。</p>
 <hr>
@@ -340,7 +340,7 @@
 <p>时钟同步的过程：</p>
 <p>一旦主设备1的时钟拉低，就会把 SCL 总线拉低。当 SCL 总线从高拉低时，主设备将计数主设备时钟的低电位周期。<br>主设备2 检测到 SCL 线为低，也会立刻将 CLK1 拉低，不会等到 CLK1 的正常周期才拉低。<br>如果此时另外一个主设备的时钟仍然是低电平的，此时 SCL 总线也同样的保持为低。在此期间，低周期比较短的主设备1 将进入高电平状态等待。如图，主设备1 提前进入高电平等待，主设备2 继续保持低电平。<br>当所有主设备的时钟都为高电平时，将会把 SCL 线拉高。也就是说时钟低电平周期较长的主设备2 决定了 SCL 线为低的周期长度。<br>所有的主设备时钟都拉高时，将对他们的高电平时钟计数，第一个结束时钟高电平周期的主设备将会把 SCL 线拉低。主设备2 将 SCL 拉低后，主设备1 检测到 SCL 线为低时，CLK1 也立刻拉低。</p>
 </blockquote>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/%E6%97%B6%E9%92%9F%E5%90%8C%E6%AD%A5.png" srcset="/img/loading.gif" lazyload alt="时钟同步"></p>
+<p><img src="/.top//%E6%97%B6%E9%92%9F%E5%90%8C%E6%AD%A5.png" srcset="/img/loading.gif" lazyload alt="时钟同步"></p>
 <h2 id="总线仲裁"><a href="#总线仲裁" class="headerlink" title="总线仲裁"></a>总线仲裁</h2><p>仲裁和同步是一样的，只有在系统使用多个主设备时才需要，而从设备（slave）不参与仲裁程序。当然，只有在主线空闲的情况下，主设备才可以发起传输。两个主机可以在启动条件的最小保持时间内生成一个启动条件，从而在总线上生成一个有效的传输启动条件，然后仲裁程序决定哪一个主设备可以完成它的传输。</p>
 <p>谁先在 SDA 线上发送低电平，谁就掌握对总线的控制权。<br>由于 I²C 总线的控制只由地址或主机码以及竞争主机发送的数据决定，没有中央主机，总线也没有任何定制的优先权。</p>
 <p>必须特别注意的是：在串行传输时，当重复起始条件或停止条件发送到I²C 总线的时侯，仲裁过程仍在进行。如果可能产生这样的情况，有关的主机必须在帧格式相同位置发送这个重复起始条件或停止条件。也就是说，仲裁在不能下面情况之间进行：</p>
@@ -353,7 +353,7 @@
 <p>仲裁的过程：</p>
 <p>当两个 master 对同一个地址的 slave 进行传输时，多个 master 会都进入数据周期，仲裁会单比特对单比特进行比较。在 SCL 为高的每一个比特位期间，每个主设备检查 SDA 线的电平是否与它所发送的相匹配。这个过程很可能需要比对很多位。如果传输的数据时完全相同的，则这个主设备可以完成地发送整个事务。<br>当主设备发送的比特位与 SDA 线不匹配时，例如图中 DATA1 在 SCL 线的第三个周期，此时 DATA1 拉高，而 DATA2 为低，DATA1 和 DATA2 在“线与”后 SDA 为低，匹配不成功。当主设备1 检测到一个与自身不相符的低电平，这时会关闭主设备1 的 SDA 传输驱动，另一个主设备2 会继续完成传输。</p>
 </blockquote>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/%E6%80%BB%E7%BA%BF%E4%BB%B2%E8%A3%81.png" srcset="/img/loading.gif" lazyload alt="总线仲裁"></p>
+<p><img src="/.top//%E6%80%BB%E7%BA%BF%E4%BB%B2%E8%A3%81.png" srcset="/img/loading.gif" lazyload alt="总线仲裁"></p>
 <p>根据上面的描述得出：</p>
 <ul>
 <li><strong>对于整个仲裁过程主控器1和主控器2都不会丢失数据；</strong></li>
@@ -416,10 +416,10 @@
 </tr>
 </tbody></table>
 <p>IIC 地址也分为 8 位地址(加上第八位读写位)或 7 位地址（不加读写位），如上表格所示，有的 IIC 器件也支持 10 位地址的。<br>下面为手册上的 10 位地址的读写操作</p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/10%E4%BD%8D%E5%9C%B0%E5%9D%80%E5%86%99%E6%93%8D%E4%BD%9C.png" srcset="/img/loading.gif" lazyload alt="10位地址写操作.png"></p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/10%E4%BD%8D%E5%9C%B0%E5%9D%80%E8%AF%BB%E6%93%8D%E4%BD%9C.png" srcset="/img/loading.gif" lazyload alt="10位地址读写操作"></p>
+<p><img src="/.top//10%E4%BD%8D%E5%9C%B0%E5%9D%80%E5%86%99%E6%93%8D%E4%BD%9C.png" srcset="/img/loading.gif" lazyload alt="10位地址写操作.png"></p>
+<p><img src="/.top//10%E4%BD%8D%E5%9C%B0%E5%9D%80%E8%AF%BB%E6%93%8D%E4%BD%9C.png" srcset="/img/loading.gif" lazyload alt="10位地址读写操作"></p>
 <p>I2C 总线的 10 bit 寻址和 7 bit 寻址是兼容的，这样就可以在同一个总线上同时使用 7 bit 地址和 10 bit 地址模式的设备，在进行 10 bit 地址传输时，第一字节是一个特殊的保留地址来指示当前传输的是 10 bit 地址</p>
-<h1 id="三、电路"><a href="#三、电路" class="headerlink" title="三、电路"></a>三、电路</h1><p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/%E6%BC%8F%E6%9E%81%E5%BC%80%E8%B7%AF.png" srcset="/img/loading.gif" lazyload alt="漏极开路"></p>
+<h1 id="三、电路"><a href="#三、电路" class="headerlink" title="三、电路"></a>三、电路</h1><p><img src="/.top//%E6%BC%8F%E6%9E%81%E5%BC%80%E8%B7%AF.png" srcset="/img/loading.gif" lazyload alt="漏极开路"></p>
 <p>每一个IIC总线器件内部的SDA、SCL引脚电路结构都是一样的，引脚的输出驱动与输入缓冲连在一起。其中输出为漏极开路的场效应管、输入缓冲为一只高输入阻抗的同相器。</p>
 <p>这种电路具有两个特点：</p>
 <p> <em><strong>1. 由于SDA、SCL为漏极开路结构，借助于外部的上拉电阻实现了信号的“线与”逻辑；</strong></em><br> <em><strong>2. 引脚在输出信号的同时还将引脚上的电平进行检测，检测是否与刚才输出一致。为 “时钟同步”和“总线仲裁”提供硬件基础。</strong></em></p>
@@ -427,16 +427,16 @@
 <pre><code class="hljs">IIC协议支持多个主设备与多个从设备在一条总线上, 如果不用开漏输出, 而用推挽输出, 会出现主设备之间短路的情况. 至于为什么需要上拉电阻, 那是因为IIC通信需要输出高电平的能力. 
 </code></pre>
 <h1 id="四、Spec介绍"><a href="#四、Spec介绍" class="headerlink" title="四、Spec介绍"></a>四、Spec介绍</h1><p>下面是测试人员最需要关注的一页了，<strong>Electrical specifications and timing</strong></p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/Spec.png" srcset="/img/loading.gif" lazyload alt="Spec"><br><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/timming.png" srcset="/img/loading.gif" lazyload alt="timing"></p>
+<p><img src="/.top//Spec.png" srcset="/img/loading.gif" lazyload alt="Spec"><br><img src="/.top//timming.png" srcset="/img/loading.gif" lazyload alt="timing"></p>
 <p>对上面部分参数的解释如下</p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/VIH&VIL.png" srcset="/img/loading.gif" lazyload alt="VIH&amp;VIL.png"></p>
+<p><img src="/.top//VIH&VIL.png" srcset="/img/loading.gif" lazyload alt="VIH&amp;VIL.png"></p>
 <p>VIH&#x2F;VIL的解释：</p>
 <blockquote>
 <p>输入电平若在 VIL（max）~0之间，即输入电平为低电平</p>
 <p>输入电平若在 VIH（min）~VDD之间，即输入电平为高电平</p>
 </blockquote>
 <p>VIL（max）为低电平的门限电平；VIH（min）为高电平的门限电平</p>
-<p><img src="/I2C%E7%9A%84%E7%88%B1%E6%81%A8%E6%83%85%E4%BB%87/%E5%BB%BA%E7%AB%8B%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4.png" srcset="/img/loading.gif" lazyload alt="建立保持时间"></p>
+<p><img src="/.top//%E5%BB%BA%E7%AB%8B%E4%BF%9D%E6%8C%81%E6%97%B6%E9%97%B4.png" srcset="/img/loading.gif" lazyload alt="建立保持时间"></p>
 <p>建立保持时间的解释：</p>
 <blockquote>
 <p>建立时间（Tsu）： 在时钟采样沿之前，数据必须保持稳定的最短时间。</p>
